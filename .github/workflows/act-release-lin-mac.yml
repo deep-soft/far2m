@@ -204,9 +204,9 @@ jobs:
           
           for plug1 in $extra_plugin_list1 ; do
             echo "ExtraPluginS=$plug1";
-            git clone --depth 1 https://github.com/deep-soft/far2l-$plug1.git && \
-            ( echo "mv far2l-$plug1 $plug1" && \
-              mv far2l-$plug1 $plug1 && \
+            git clone --depth 1 https://github.com/deep-soft/far2m-$plug1.git && \
+            ( echo "mv far2m-$plug1 $plug1" && \
+              mv far2m-$plug1 $plug1 && \
               cd $plug1 && \
               find . -mindepth 1 -name 'src' -prune -o -exec rm -rf {} + && \
               mv src/* . && rm -rf src )
