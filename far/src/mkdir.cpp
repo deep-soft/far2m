@@ -1,0 +1,226 @@
+/*
+mkdir.cpp
+
+Создание каталога
+*/
+/*
+Copyright (c) 1996 Eugene Roshal
+Copyright (c) 2000 Far Group
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the authors may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+#include "headers.hpp"
+
+
+#include "mkdir.hpp"
+#include "lang.hpp"
+#include "filepanels.hpp"
+#include "panel.hpp"
+#include "treelist.hpp"
+#include "ctrlobj.hpp"
+#include "udlist.hpp"
+#include "message.hpp"
+#include "config.hpp"
+#include "dialog.hpp"
+#include "pathmix.hpp"
+#include "strmix.hpp"
+#include "DlgGuid.hpp"
+
+enum
+{
+	MKDIR_BORDER,
+	MKDIR_TEXT,
+	MKDIR_EDIT,
+	MKDIR_SEPARATOR0,
+	MKDIR_CHECKBOX,
+	MKDIR_SEPARATOR2,
+	MKDIR_OK,
+	MKDIR_CANCEL,
+};
+
+LONG_PTR WINAPI MkDirDlgProc(HANDLE hDlg,int Msg,int Param1,LONG_PTR Param2)
+{
+	switch (Msg)
+	{
+		case DN_CLOSE:
+		{
+			if (Param1==MKDIR_OK)
+			{
+				FARString strDirName=reinterpret_cast<LPCWSTR>(SendDlgMessage(hDlg,DM_GETCONSTTEXTPTR,MKDIR_EDIT,0));
+				Opt.MultiMakeDir=(SendDlgMessage(hDlg,DM_GETCHECK,MKDIR_CHECKBOX,0)==BSTATE_CHECKED);
+
+				UserDefinedList* pDirList=reinterpret_cast<UserDefinedList*>(SendDlgMessage(hDlg,DM_GETDLGDATA,0,0));
+
+				bool OK = (Opt.MultiMakeDir && pDirList->Set(strDirName)) || (!Opt.MultiMakeDir && pDirList->SetAsIs(strDirName));
+				if (!OK)
+				{
+					Message(MSG_WARNING,1,Msg::Warning,Msg::IncorrectDirList,Msg::Ok);
+					return FALSE;
+				}
+			}
+		}
+		break;
+	}
+
+	return DefDlgProc(hDlg,Msg,Param1,Param2);
+}
+
+void ShellMakeDir(Panel *SrcPanel)
+{
+	UserDefinedList DirList(ULF_UNIQUE|ULF_CASESENSITIVE);
+	DialogDataEx MkDirDlgData[]=
+	{
+		{DI_DOUBLEBOX,3,1,72,8,{},0,Msg::MakeFolderTitle},
+		{DI_TEXT,     5,2, 0,2,{},0,Msg::CreateFolder},
+		{DI_EDIT,     5,3,70,3,{(DWORD_PTR)L"NewFolder"},DIF_FOCUS|DIF_EDITEXPAND|DIF_HISTORY|DIF_USELASTHISTORY|DIF_EDITPATH,L""},
+		{DI_TEXT,     0,4, 0,4,{},DIF_SEPARATOR,L""},
+		{DI_CHECKBOX, 5,5, 0,5,{(DWORD_PTR)Opt.MultiMakeDir},0,Msg::MultiMakeDir},
+		{DI_TEXT,     0,6, 0,6,{},DIF_SEPARATOR,L""},
+		{DI_BUTTON,   0,7, 0,7,{},DIF_DEFAULT|DIF_CENTERGROUP,Msg::Ok},
+		{DI_BUTTON,   0,7, 0,7,{},DIF_CENTERGROUP,Msg::Cancel}
+	};
+	MakeDialogItemsEx(MkDirDlgData,MkDirDlg);
+	Dialog Dlg(MkDirDlg,ARRAYSIZE(MkDirDlg),MkDirDlgProc,reinterpret_cast<LONG_PTR>(&DirList));
+	Dlg.SetPosition(-1,-1,76,10);
+	Dlg.SetHelp(L"MakeFolder");
+	Dlg.SetId(MakeFolderId);
+	Dlg.Process();
+
+	if (Dlg.GetExitCode()==MKDIR_OK)
+	{
+		FARString strDirName;
+		const wchar_t *OneDir;
+
+		for (size_t DI = 0; nullptr!=(OneDir=DirList.Get(DI)); ++DI)
+		{
+			strDirName = OneDir;
+			FARString strOriginalDirName = strDirName;
+
+			DeleteEndSlash(strDirName,true);
+			wchar_t *lpwszDirName = strDirName.GetBuffer();
+			bool bSuccess = false;
+
+			for (wchar_t *ChPtr=lpwszDirName; *ChPtr; ChPtr++)
+			{
+				if (IsSlash(*ChPtr))
+				{
+					wchar_t Ch = ChPtr[1];
+					ChPtr[1] = 0;
+
+					if ((apiGetFileAttributes(lpwszDirName) == INVALID_FILE_ATTRIBUTES) &&
+						apiCreateDirectory(lpwszDirName,nullptr))
+					{
+						TreeList::AddTreeName(lpwszDirName);
+						bSuccess = true;
+					}
+
+					ChPtr[1] = Ch;
+				}
+			}
+
+			strDirName.ReleaseBuffer();
+			BOOL bSuccess2;
+			bool bSkip=false;
+
+			while (!(bSuccess2=apiCreateDirectory(strDirName,nullptr)))
+			{
+				int LastError=WINPORT(GetLastError)();
+
+				if (LastError==ERROR_ALREADY_EXISTS ||
+				        LastError==ERROR_INVALID_NAME || LastError == ERROR_DIRECTORY)
+				{
+					int ret;
+
+					if (DirList.IsLastElement(DI))
+					{
+						ret=Message(MSG_WARNING|MSG_ERRORTYPE,1,Msg::Error,Msg::CannotCreateFolder,strOriginalDirName,Msg::Ok);
+						bSkip = false;
+					}
+					else
+					{
+						ret=Message(MSG_WARNING|MSG_ERRORTYPE,2,Msg::Error,Msg::CannotCreateFolder,strOriginalDirName,Msg::Skip,Msg::Cancel);
+						bSkip = ret==0;
+					}
+
+					if (bSuccess || bSkip)
+						break;
+					else
+						return;
+				}
+				else
+				{
+					int ret;
+
+					if (DirList.IsLastElement(DI))
+					{
+						ret=Message(MSG_WARNING|MSG_ERRORTYPE,2,Msg::Error,Msg::CannotCreateFolder,strOriginalDirName,Msg::Retry,Msg::Cancel);
+					}
+					else
+					{
+						ret=Message(MSG_WARNING|MSG_ERRORTYPE,3,Msg::Error,Msg::CannotCreateFolder,strOriginalDirName,Msg::Retry,Msg::Skip,Msg::Cancel);
+						bSkip = ret==1;
+					}
+
+					if (ret)
+					{
+						if (bSuccess || bSkip) break;
+						else return;
+					}
+				}
+			}
+
+			if (bSuccess2)
+				TreeList::AddTreeName(strDirName);
+			else if (!bSkip)
+				break;
+		}
+
+		SrcPanel->Update(UPDATE_KEEP_SELECTION);
+
+		if (!strDirName.IsEmpty())
+		{
+			size_t pos;
+
+			if (FindSlash(pos,strDirName))
+				strDirName.Truncate(pos);
+
+			if (!SrcPanel->GoToFile(strDirName) && strDirName.At(strDirName.GetLength()-1)==L'.')
+			{
+				strDirName.Truncate(strDirName.GetLength()-1);
+				SrcPanel->GoToFile(strDirName);
+			}
+		}
+
+		SrcPanel->Redraw();
+		Panel *AnotherPanel=CtrlObject->Cp()->GetAnotherPanel(SrcPanel);
+		int AnotherType=AnotherPanel->GetType();
+
+		if (AnotherPanel->NeedUpdatePanel(SrcPanel) || AnotherType==QVIEW_PANEL)
+		{
+			AnotherPanel->Update(UPDATE_KEEP_SELECTION|UPDATE_SECONDARY);
+			AnotherPanel->Redraw();
+		}
+	}
+}

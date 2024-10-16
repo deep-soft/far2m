@@ -1,0 +1,121 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: far2m
+Upstream-Contact: Yes
+Source: https://github.com/shmuz/far2m
+
+Files: *
+Copyright:
+License: GPL-2
+
+Files: colorer/* colorer/src/pcolorer2/ConsoleAnnotation.h
+Copyright: 1999-2010 Igor Ruskih
+           2009-2020 Aleksey Dobrunov
+           2009-2020 Eugene Efremov
+           2009-2020 Anatoly Techtonik
+           2009-2020 2useven10
+           2009-2020 Max Galkin
+License: BSD-3-clause
+
+Files: colorer/src/Colorer-library/src/colorer/unicode/x_tables_generator.pl colorer/src/Colorer-library/src/colorer/unicode/x_encodings.pl colorer/src/pcolorer2/ChooseTypeMenu.cpp colorer/src/pcolorer2/ConsoleAnnotation.h colorer/src/pcolorer2/FarEditor.h colorer/src/pcolorer2/FarEditorSet.h colorer/src/pcolorer2/FarHrcSettings.h colorer/src/pcolorer2/pcolorer.h colorer/src/pcolorer2/StringBuffer.cpp colorer/src/pcolorer2/tools.cpp colorer/src/pcolorer2/ChooseTypeMenu.h colorer/src/pcolorer2/FarEditor.cpp colorer/src/pcolorer2/FarEditorSet.cpp colorer/src/pcolorer2/FarHrcSettings.cpp colorer/src/pcolorer2/pcolorer.cpp colorer/src/pcolorer2/resource.h colorer/src/pcolorer2/StringBuffer.h colorer/src/pcolorer2/tools.h
+Copyright: 1999-2009 Igor Ruskih
+           2009-2020 Aleksey Dobrunov
+           2009-2020 Eugene Efremov
+           2009-2020 Anatoly Techtonik
+           2009-2020 2useven10
+           2009-2020 Max Galkin
+License: GPL-2
+
+Files: colorer/configs/*
+Copyright: 1999-2009 Igor Ruskih
+License: GPL-2
+
+Files: farlng/*
+Copyright: 2003-2005 WARP ItSelf
+           2005 Alex Yaroslavsky
+License: BSD-3-clause
+
+Files: compare/* drawline/* editcase/* align/* autowrap/* filecase/* multiarc/* SimpleIndent/* tmppanel/*
+Copyright: 1996-2000 Eugene Roshal
+           2000-2021 Far Group
+License: BSD-3-clause
+
+Files: calc/*
+Copyright: 1998-2001 Igor Russkih
+           2009-2012 uncle-vunkis
+           2020-2020 FarPlugins Team
+License: BSD-3-clause
+
+Files: calc/src/shared/mathexpression/*
+Copyright: 2009-2009 Andrey Myznikov
+           2009-2009 Sergey Prokopenko
+           2009-2009 Elizaveta Evstifeeva
+License: BSD-3-clause
+
+Files: calc/src/shared/ttmath/*
+Copyright: 2006-2012 Tomasz Sowa
+License: BSD-3-clause
+
+Files: calc/src/shared/trex/*
+Copyright: 2003-2006 Alberto Demichelis
+License: T-Rex
+
+Files: editorcomp/*
+Copyright:
+License: GPL-2
+
+Files: far/bootstrap/* far/far2sdk/* far/src/panels/filelist.hpp far/src/cache.hpp far/src/exitcode.hpp far/src/dizlist.cpp far/src/plist.cpp far/src/panels/panel.hpp far/src/LICENSE.Far2.txt far/src/panels/flshow.cpp far/src/panels/infolist.cpp far/src/fileview.cpp far/src/editor.hpp far/src/filetype.hpp far/src/hist/history.cpp far/src/DlgGuid.hpp far/src/message.hpp far/src/frame.cpp far/src/FilesSuggestor.cpp far/src/dizlist.hpp far/src/DialogBuilder.cpp far/src/DialogBuilder.hpp far/src/fileattr.hpp far/src/dialog.hpp far/src/plist.hpp far/src/panels/filelist.cpp far/src/RefreshFrameManager.cpp far/src/copy.hpp far/src/fileowner.cpp far/src/panels/flupdate.cpp far/src/setattr.cpp far/src/frame.hpp far/src/filetype.cpp far/src/RefreshFrameManager.hpp far/src/panels/qview.cpp far/src/plug/plugins.cpp far/src/plug/plugapi.cpp far/src/plug/PluginW.hpp far/src/plug/PluginA.cpp far/src/plug/plugins.hpp far/src/plug/wrap.cpp far/src/plug/PluginA.hpp far/src/plug/plclass.hpp far/src/plug/PluginW.cpp far/src/plug/plclass.cpp far/src/plug/plugapi.hpp far/src/foldtree.hpp far/src/headers.hpp far/src/TPreRedrawFunc.cpp far/src/lang.hpp far/src/locale/DetectCodepage.h far/src/locale/locale.cpp far/src/locale/locale.hpp far/src/locale/xlat.hpp far/src/locale/codepage.hpp far/src/locale/DetectCodepage.cpp far/src/locale/xlat.cpp far/src/locale/codepage.cpp far/src/vmenu.hpp far/src/viewer.cpp far/src/fnparce.cpp far/src/stddlg.cpp far/src/base/SafeMMap.cpp far/src/setcolor.cpp far/src/base/farqueue.hpp far/src/global.cpp far/src/hilight.cpp far/src/stddlg.hpp far/src/global.hpp far/src/execute.cpp far/src/datetime.cpp far/src/rdrwdsk.cpp far/src/edit.cpp far/src/TPreRedrawFunc.hpp far/src/keybar.hpp far/src/execute.hpp far/src/panels/treelist.cpp far/src/findfile.cpp far/src/panels/panel.cpp far/src/bookmarks/BookmarksMenu.cpp far/src/bookmarks/BookmarksLegacy.cpp far/src/base/SafeMMap.hpp far/src/FilesSuggestor.hpp far/src/hist/poscache.hpp far/src/filefilterparams.cpp far/src/farwinapi.hpp far/src/base/farqueue.cpp far/src/synchro.cpp far/src/filepanels.cpp far/src/viewer.hpp far/src/rdrwdsk.hpp far/src/fileedit.hpp far/src/menubar.cpp far/src/dirinfo.cpp far/src/filestr.cpp far/src/filepanels.hpp far/src/options.hpp far/src/hist/history.hpp far/src/panels/infolist.hpp far/src/filefilter.cpp far/src/cmdline.cpp far/src/cfg/language.cpp far/src/panels/flmodes.cpp far/src/filefilter.hpp far/src/findfile.hpp far/src/hmenu.cpp far/src/vmenu.cpp far/src/scantree.cpp far/src/syslog.hpp far/src/cmdline.hpp far/src/cfg/language.hpp far/src/dirinfo.hpp far/src/modal.cpp far/src/foldtree.cpp far/src/datetime.hpp far/src/ctrlobj.hpp far/src/clipboard.cpp far/src/delete.hpp far/src/dlgedit.cpp far/src/ctrlobj.cpp far/src/modal.hpp far/src/execute_oscmd.cpp far/src/mkdir.cpp far/src/namelist.cpp far/src/mkdir.hpp far/src/help.cpp far/src/fileowner.hpp far/src/Mounts.cpp far/src/copy.cpp far/src/synchro.hpp far/src/hist/poscache.cpp far/src/setattr.hpp far/src/flink.hpp far/src/filestr.hpp far/src/console/scrsaver.cpp far/src/console/scrobj.cpp far/src/console/grabber.hpp far/src/console/constitle.hpp far/src/console/palette.cpp far/src/console/palette.hpp far/src/console/scrsaver.hpp far/src/console/grabber.cpp far/src/console/savescr.cpp far/src/console/lockscrn.cpp far/src/console/scrbuf.hpp far/src/console/lockscrn.hpp far/src/console/savescr.hpp far/src/console/scrbuf.cpp far/src/console/interf.cpp far/src/console/interf.hpp far/src/console/constitle.cpp far/src/console/console.hpp far/src/console/scrobj.hpp far/src/console/keys.hpp far/src/console/keyboard.cpp far/src/console/keyboard.hpp far/src/console/console.cpp far/src/console/colors.hpp far/src/menubar.hpp far/src/mix/cddrv.hpp far/src/mix/RegExp.hpp far/src/mix/pathmix.cpp far/src/mix/chgprior.hpp far/src/base/farrtl.hpp far/src/mix/mix.hpp far/src/mix/format.hpp far/src/mix/wakeful.hpp far/src/mix/panelmix.hpp far/src/mix/drivemix.hpp far/src/mix/drivemix.cpp far/src/base/bitflags.hpp far/src/mix/RegExp.cpp far/src/mix/panelmix.cpp far/src/base/array.hpp far/src/mix/mix.cpp far/src/mix/strmix.cpp far/src/mix/cvtname.hpp far/src/base/farrtl.cpp far/src/mix/strmix.hpp far/src/base/DList.hpp far/src/mix/pathmix.hpp far/src/base/FARString.cpp far/src/mix/processname.cpp far/src/mix/processname.hpp far/src/base/DList.cpp far/src/mix/cddrv.cpp far/src/base/CriticalSections.hpp far/src/base/FARString.hpp far/src/mix/dirmix.hpp far/src/mix/udlist.cpp far/src/base/noncopyable.hpp far/src/mix/dirmix.cpp far/src/mix/udlist.hpp far/src/mix/cvtname.cpp far/src/mix/chgprior.cpp far/src/mix/format.cpp far/src/cfg/config.cpp far/src/cfg/config.hpp far/src/cfg/HotkeyLetterDialog.hpp far/src/cfg/HotkeyLetterDialog.cpp far/src/usermenu.hpp far/src/syslog.cpp far/src/Mounts.hpp far/src/setcolor.hpp far/src/namelist.hpp far/src/farwinapi.cpp far/src/options.cpp far/src/fileview.hpp far/src/delete.cpp far/src/clipboard.hpp far/src/farversion.h far/src/dlgedit.hpp far/src/panelctype.hpp far/src/manager.cpp far/src/filefilterparams.hpp far/src/message.cpp far/src/fileedit.cpp far/src/filemask/FileMasksWithExclude.cpp far/src/filemask/CFileMask.cpp far/src/filemask/CFileMask.hpp far/src/filemask/FileMasksProcessor.hpp far/src/filemask/FileMasksWithExclude.hpp far/src/filemask/FileMasksProcessor.cpp far/src/filemask/BaseFileMask.hpp far/src/editor.cpp far/src/hmenu.hpp far/src/manager.hpp far/src/fileattr.cpp far/src/hilight.hpp far/src/edit.hpp far/src/scantree.hpp far/src/panels/treelist.hpp far/src/macro/TStack.hpp far/src/macro/tvar.hpp far/src/macro/chgmmode.cpp far/src/macro/macro.hpp far/src/macro/chgmmode.hpp far/src/macro/syntax.cpp far/src/macro/tvar.cpp far/src/macro/macro.cpp far/src/macro/macroopcode.hpp far/src/macro/syntax.hpp far/src/flink.cpp far/src/fnparce.hpp far/src/usermenu.cpp far/src/panels/qview.hpp far/src/main.cpp far/src/DlgGuid.cpp far/src/panels/fldata.cpp far/src/panels/flplugin.cpp far/src/keybar.cpp far/src/help.hpp far/src/dialog.cpp far/src/cache.cpp
+Copyright: 1996-2000 Eugene Roshal
+           2000-2021 Far Group
+License: BSD-3-clause+FAR-Plugins-Exception
+
+Files: far/src/vt/vtansi.cpp
+Copyright: 2005-2014 Jason Hood
+License: ANSICON
+
+Files: multiarc/src/formats/rar/unrar/*
+Copyright: 2009-2020 Alexander L. Roshal
+License: UnRAR
+
+Files: multiarc/src/formats/ha/ha/*
+Copyright: 1993-1993 Harri Hirvola
+License: GPL-2
+
+Files: multiarc/src/formats/7z/C/* multiarc/src/formats/7z/7zMain.c
+Copyright: 2013-2019 Igor Pavlov
+License: public-domain
+
+Files: NetRocks/*
+Copyright:
+License: GPL-2+OpenSSL-Exception
+
+Files: incsrch/*
+Copyright:
+License: GPL-2
+
+Files: inside/*
+Copyright:
+License: GPL-2
+
+Files: packaging/*
+Copyright:
+License: GPL-2
+
+Files: python/*
+Copyright:
+License: GPL-2
+
+Files: WinPort/FarTTY.h
+Copyright:
+License: public-domain
+
+Files: utils/* WinPort/*
+Copyright:
+License: GPL-2
+
+Files: utils/include/ww898/*
+Copyright: 2017-2020 Mikhail Pilin
+License: MIT
+
+Files: utils/src/crc64.c
+Copyright: 2012-2012 Salvatore Sanfilippo
+License: BSD-3-clause
