@@ -3,7 +3,6 @@
 #2024-07-19 07:20
 #macosx latest /opt/homebrew instead of /usr/local
 #BOF
-
 export os_name=$("uname")
 case $os_name in
   Darwin*)
